@@ -61,6 +61,8 @@ Here’s a simplified version of the model-context-schema.json:
 }
 ```
 
+This is the content of the JSON Schema itself, in the reference file you'll find the format required by Apicurio Registry to allow registration.
+
 ## Registering the Schema in Apicurio
 
 Start Apicurio Registry locally or use a hosted instance.
@@ -134,7 +136,23 @@ curl -X POST http://localhost:8081/models -H "Content-Type: application/json" -d
 You'll get a validation error response:
 
 ```
-{"details":[{"description":"$.artifactUri: integer found, string expected","context":"1029"},{"description":"$.metrics.accuracy: string found, number expected","context":"1029"},{"description":"$: required property 'version' not found","context":"1028"}],"error":"Model validation failed"}
+{
+   "details":[
+      {
+         "description":"$.artifactUri: integer found, string expected",
+         "context":"1029"
+      },
+      {
+         "description":"$.metrics.accuracy: string found, number expected",
+         "context":"1029"
+      },
+      {
+         "description":"$: required property 'version' not found",
+         "context":"1028"
+      }
+   ],
+   "error":"Model validation failed"
+}
 ```
 
 
@@ -157,7 +175,7 @@ We’ve open-sourced the demo on GitHub: https://github.com/carlesarnal/model-me
 To run it locally:
 
 - Start Apicurio
-  `docker run -it --rm -p 8080:8080 apicurio/apicurio-registry:latest`
+  `docker run -it --rm -p 8080:8080 apicurio/apicurio-registry:latest-release`
 
 - Register the schema
   `curl -X POST http://localhost:8080/apis/registry/v3/groups/mcp-models/artifacts -H "Content-Type: application/json" -d @./model-context-schema.json`
